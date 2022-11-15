@@ -1,0 +1,15 @@
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\bin\Debug\net6.0\JwtIdentity.Application.deps.json
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\bin\Debug\net6.0\JwtIdentity.Application.dll
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\bin\Debug\net6.0\JwtIdentity.Application.pdb
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\bin\Debug\net6.0\JwtIdentity.Domain.dll
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\bin\Debug\net6.0\JwtIdentity.Domain.pdb
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\obj\Debug\net6.0\JwtIdentity.Application.csproj.AssemblyReference.cache
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\obj\Debug\net6.0\JwtIdentity.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\obj\Debug\net6.0\JwtIdentity.Application.AssemblyInfoInputs.cache
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\obj\Debug\net6.0\JwtIdentity.Application.AssemblyInfo.cs
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\obj\Debug\net6.0\JwtIdentity.Application.csproj.CoreCompileInputs.cache
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\obj\Debug\net6.0\JwtIdentity.Application.csproj.CopyComplete
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\obj\Debug\net6.0\JwtIdentity.Application.dll
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\obj\Debug\net6.0\refint\JwtIdentity.Application.dll
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\obj\Debug\net6.0\JwtIdentity.Application.pdb
+D:\Projects\2022\JwtIdentity\JwtIdentity.Application\obj\Debug\net6.0\ref\JwtIdentity.Application.dll

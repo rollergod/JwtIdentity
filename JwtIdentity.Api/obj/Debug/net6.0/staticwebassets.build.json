@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "1KmkKvEweEv7Pv5xkX344YELZFZu+iyCQaUo3mVT95g=",
+  "Source": "JwtIdentity.Api",
+  "BasePath": "_content/JwtIdentity.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

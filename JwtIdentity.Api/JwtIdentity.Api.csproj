@@ -7,11 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JwtIdentity.Persistance\JwtIdentity.Persistance.csproj" />
     <ProjectReference Include="..\JwtIdentity.Application\JwtIdentity.Application.csproj" />
     <ProjectReference Include="..\JwtIdentity.Infrastructure\JwtIdentity.Infrastructure.csproj" />
   </ItemGroup>
