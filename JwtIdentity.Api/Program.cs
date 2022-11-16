@@ -1,3 +1,4 @@
+using JwtIdentity.Api;
 using JwtIdentity.Domain.IdentityModels;
 using JwtIdentity.Infrastructure;
 using JwtIdentity.Persistance;
@@ -6,18 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 builder.Services.AddInfrastructureLayer(builder.Configuration);
-
-builder.Services.AddIdentityCore<User>()
-    .AddUserManager<UserManager<User>>()
-    .AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddUiLayer();
 
 var app = builder.Build();
 

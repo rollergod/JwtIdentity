@@ -74,3 +74,6 @@ D:\Projects\2022\JwtIdentity\JwtIdentity.Api\obj\Debug\net6.0\ref\JwtIdentity.Ap
 D:\Projects\2022\JwtIdentity\JwtIdentity.Api\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Projects\2022\JwtIdentity\JwtIdentity.Api\bin\Debug\net6.0\Humanizer.dll
 D:\Projects\2022\JwtIdentity\JwtIdentity.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Projects\2022\JwtIdentity\JwtIdentity.Api\bin\Debug\net6.0\Mapster.dll
+D:\Projects\2022\JwtIdentity\JwtIdentity.Api\bin\Debug\net6.0\Mapster.Core.dll
+D:\Projects\2022\JwtIdentity\JwtIdentity.Api\bin\Debug\net6.0\Mapster.DependencyInjection.dll

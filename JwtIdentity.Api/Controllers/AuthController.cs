@@ -4,6 +4,7 @@ using JwtIdentity.Domain.Common;
 using JwtIdentity.Domain.Common.Contracts.DTO;
 using JwtIdentity.Domain.Common.Contracts.Response;
 using JwtIdentity.Domain.IdentityModels;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,12 +29,7 @@ public class AuthController : ControllerBase
     {
         if (ModelState.IsValid)
         {
-            var user = new User
-            {
-                UserName = model.Name,
-                DisplayName = model.NickName,
-                Email = model.Email
-            };
+            var user = model.Adapt<User>();
 
             var result = await _userService.Register(user, model.Password);
 

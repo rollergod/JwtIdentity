@@ -1,6 +1,7 @@
 using JwtIdentity.Application.Common.Interfaces;
 using JwtIdentity.Domain.Common.Contracts.Response;
 using JwtIdentity.Domain.IdentityModels;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 
 namespace JwtIdentity.Infrastructure.Services;
@@ -32,8 +33,10 @@ public class UserService : IUserService
 
         var token = _jwtTokenGenerator.GenerateToken(isUserExist);
 
+        var tokenResponse = (isUserExist, token).Adapt<TokenResponse>(); //mapster
+
         return Response<TokenResponse>.Success(
-            data: new TokenResponse { User = isUserExist, Token = token },
+            data: tokenResponse,
             message: "Successful authorization"
         );
     }
