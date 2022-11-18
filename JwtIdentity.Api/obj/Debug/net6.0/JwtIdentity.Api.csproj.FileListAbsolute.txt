@@ -77,3 +77,4 @@ D:\Projects\2022\JwtIdentity\JwtIdentity.Api\bin\Debug\net6.0\Microsoft.EntityFr
 D:\Projects\2022\JwtIdentity\JwtIdentity.Api\bin\Debug\net6.0\Mapster.dll
 D:\Projects\2022\JwtIdentity\JwtIdentity.Api\bin\Debug\net6.0\Mapster.Core.dll
 D:\Projects\2022\JwtIdentity\JwtIdentity.Api\bin\Debug\net6.0\Mapster.DependencyInjection.dll
+D:\Projects\2022\JwtIdentity\JwtIdentity.Api\bin\Debug\net6.0\RestSharp.dll

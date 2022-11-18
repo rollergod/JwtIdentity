@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "GQBQ3ufwK5lKBDexKvIq8LsLYhuao4zspcrJt2kXm3Ao4615IoyOxtCcvJnUx/F2P42RTAqr0suYTrm+e95xJg==",
+  "dgSpecHash": "UImBJwQsZJS1OIVgbngCcZD/S2uwvvA9RItwJm2ZoRTUqLWE1TRvXQNnQd4+lUT6ZaB3Q8+ZZJzNIKCGhBUecw==",
   "success": true,
   "projectFilePath": "D:\\Projects\\2022\\JwtIdentity\\JwtIdentity.Api\\JwtIdentity.Api.csproj",
   "expectedPackageFiles": [
@@ -67,6 +67,7 @@
     "C:\\Users\\Renza\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\Renza\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Renza\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\Renza\\.nuget\\packages\\restsharp\\108.0.2\\restsharp.108.0.2.nupkg.sha512",
     "C:\\Users\\Renza\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "C:\\Users\\Renza\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
     "C:\\Users\\Renza\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",

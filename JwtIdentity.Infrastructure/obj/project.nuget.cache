@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "nYkpODrljD26cR0qyb4iUFizcUXiOvUG5Pd/PQby9QEgnoHHDq1Jvj3BNY+3x47agc+uLxw7V5qlSGxgg09Wsw==",
+  "dgSpecHash": "a95B3r5FTA9tr4CneaQz/F61nuPare45smSBSBefwSOZyeApf8h1WchmSNmJqNZhp6ubNunwUri4p0ry8T1KEQ==",
   "success": true,
   "projectFilePath": "D:\\Projects\\2022\\JwtIdentity\\JwtIdentity.Infrastructure\\JwtIdentity.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -65,6 +65,7 @@
     "C:\\Users\\Renza\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\Renza\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Renza\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\Renza\\.nuget\\packages\\restsharp\\108.0.2\\restsharp.108.0.2.nupkg.sha512",
     "C:\\Users\\Renza\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\Renza\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\Renza\\.nuget\\packages\\system.configuration.configurationmanager\\4.7.0\\system.configuration.configurationmanager.4.7.0.nupkg.sha512",

@@ -15,7 +15,15 @@ public static class DependencyInjection
 
         services.AddIdentityCore<User>()
             .AddUserManager<UserManager<User>>()
-            .AddEntityFrameworkStores<AppDbContext>();
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
+        services.Configure<IdentityOptions>(opt =>
+        {
+            opt.Password.RequiredLength = 5;
+            opt.Password.RequiredUniqueChars = 0;
+            opt.Password.RequireNonAlphanumeric = false;
+        });
 
         services.AddMappings();
         return services;

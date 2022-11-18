@@ -51,7 +51,9 @@ namespace JwtIdentity.Infrastructure
             services.Configure<JwtConfig>(configuration.GetSection(JwtConfig.SectionName));
 
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddSingleton<IEmailService, EmailService>();
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IAccountService, AccountService>();
 
             return services;
         }
