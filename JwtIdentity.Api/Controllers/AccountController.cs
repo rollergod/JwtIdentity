@@ -5,6 +5,7 @@ using JwtIdentity.Domain.Common.Contracts.DTO;
 using JwtIdentity.Domain.Common.Contracts.Response;
 using JwtIdentity.Domain.IdentityModels;
 using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -17,12 +18,14 @@ public class AccountController : ControllerBase
 {
     private readonly IAuthService _userService;
     private readonly IAccountService _accountService;
-    private readonly IEmailService _emailService;
+    private readonly IMapper _mapper;
     public AccountController(IAuthService userService,
-                            IAccountService accountService)
+                            IAccountService accountService,
+                            IMapper mapper)
     {
         _userService = userService;
         _accountService = accountService;
+        _mapper = mapper;
     }
 
     [HttpPost("register")]
@@ -33,12 +36,26 @@ public class AccountController : ControllerBase
     {
         if (ModelState.IsValid)
         {
-            var user = model.Adapt<User>();
+            var user = _mapper.Map<User>(model);
 
             var result = await _userService.Register(user, model.Password);
 
             if (!result.Succeeded)
                 return BadRequest(result.ToString());
+
+            var callbackUrl = Url.Action(
+                "ConfirmEmail",
+                "Account",
+                new { code = result.Data, userId = user.Id },
+                protocol: HttpContext.Request.Scheme
+            );
+
+            string messageBody = "Please verify email by going to this <a href=\"" + callbackUrl + "\">link</a>";
+
+            var isEmailSended = await _accountService.SendEmail(messageBody, user.Email);
+
+            if (!isEmailSended.Succeeded)
+                return BadRequest("Something went wrong while sending email");
 
             return Ok(result.Message);
         }
@@ -79,7 +96,9 @@ public class AccountController : ControllerBase
                 protocol: HttpContext.Request.Scheme
             );
 
-            var isEmailSended = await _accountService.SendEmail(callbackUrl, email);
+            string messageBody = "Please reset password by going to this <a href=\"" + callbackUrl + "\">link</a>";
+
+            var isEmailSended = await _accountService.SendEmail(messageBody, email);
 
             if (!isEmailSended.Succeeded)
                 return BadRequest("Something went wrong while sending email");
@@ -94,7 +113,6 @@ public class AccountController : ControllerBase
     {
         return Ok(code);
     }
-
 
     [HttpPost("resetpassword")]
     public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordViewModel)
@@ -113,4 +131,19 @@ public class AccountController : ControllerBase
 
         return BadRequest(ModelState);
     }
+
+    [HttpGet("confirmemail")]
+    public async Task<IActionResult> ConfirmEmail(string userId, string code)
+    {
+        if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code))
+            return BadRequest("Invalid email confirmation url");
+
+        var isUserExist = await _accountService.EmailConfirmationAsync(userId, code);
+
+        if (!isUserExist.Succeeded)
+            return BadRequest(isUserExist.Message);
+
+        return Ok(isUserExist.Message);
+    }
+
 }

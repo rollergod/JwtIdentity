@@ -2,29 +2,34 @@ using JwtIdentity.Application.Common.Interfaces;
 using JwtIdentity.Domain.Common.Contracts.Response;
 using JwtIdentity.Domain.IdentityModels;
 using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
 
 namespace JwtIdentity.Infrastructure.Services;
 
 public class AuthService : IAuthService
 {
+    private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly UserManager<User> _userManager;
-
+    private readonly IMapper _mapper;
     public AuthService(
         UserManager<User> userManager,
-        IJwtTokenGenerator jwtTokenGenerator)
+        IJwtTokenGenerator jwtTokenGenerator,
+        IMapper mapper)
     {
         _userManager = userManager;
         _jwtTokenGenerator = jwtTokenGenerator;
+        _mapper = mapper;
     }
-
-    private readonly IJwtTokenGenerator _jwtTokenGenerator;
     public async Task<Response<TokenResponse>> Login(string email, string password)
     {
         var isUserExist = await _userManager.FindByEmailAsync(email);
 
         if (isUserExist == null)
             return Response<TokenResponse>.Fail("User doesn`t exist");
+
+        if (!isUserExist.EmailConfirmed)
+            return Response<TokenResponse>.Fail("User doesn`t confirm his email");
 
         var isPasswordCorrect = await _userManager.CheckPasswordAsync(isUserExist, password);
 
@@ -33,7 +38,7 @@ public class AuthService : IAuthService
 
         var token = _jwtTokenGenerator.GenerateToken(isUserExist);
 
-        var tokenResponse = (isUserExist, token).Adapt<TokenResponse>(); //mapster
+        var tokenResponse = _mapper.Map<TokenResponse>((isUserExist, token));
 
         return Response<TokenResponse>.Success(
             data: tokenResponse,
@@ -51,7 +56,13 @@ public class AuthService : IAuthService
         var isCreated = await _userManager.CreateAsync(model, password);
 
         if (isCreated.Succeeded)
-            return Response<string>.Success("User registered successfully");
+        {
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(model);
+
+            return Response<string>.Success(
+                data: code,
+                message: "User registered successfully. Confirm email");
+        }
 
         var errorList = isCreated.Errors.ToList();
 

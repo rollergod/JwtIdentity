@@ -8,7 +8,7 @@ public class ForgotPasswordMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.ForType<(User user, string token), ForgotPasswordCodeResponse>()
+        config.NewConfig<(User user, string token), ForgotPasswordCodeResponse>()
             .Map(dest => dest.Code, src => src.token)
             .Map(dest => dest.User, src => src.user);
     }

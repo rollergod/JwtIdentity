@@ -1,5 +1,6 @@
 using System.Reflection;
 using Mapster;
+using MapsterMapper;
 
 namespace JwtIdentity.Api.Common.Mapping;
 
@@ -11,6 +12,7 @@ public static class DependencyInjection
         config.Scan(Assembly.GetExecutingAssembly());
 
         services.AddSingleton(config);
+        services.AddSingleton<IMapper, ServiceMapper>();
         return services;
     }
 }

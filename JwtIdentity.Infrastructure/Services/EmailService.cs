@@ -25,11 +25,11 @@ public class EmailService : IEmailService
         RestRequest request = new RestRequest();
 
         request.AddParameter("domain",
-                            "sandboxe9183e77d96f4124b103918ce9c052a2.mailgun.org",
+                            "sandbox57409a8d20f7414799919a5e1cdef248.mailgun.org",
                             type: ParameterType.UrlSegment);
 
         request.Resource = "{domain}/messages";
-        request.AddParameter("from", "Excited User <mailgun@sandboxe9183e77d96f4124b103918ce9c052a2.mailgun.org>");
+        request.AddParameter("from", "Excited User <mailgun@sandbox57409a8d20f7414799919a5e1cdef248.mailgun.org>");
         request.AddParameter("to", "testemailsender29@gmail.com");
         request.AddParameter("subject", "Rollergod Project");
         request.AddParameter("text", "Text");

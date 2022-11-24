@@ -13,7 +13,7 @@ public static class DependencyInjection
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        services.AddIdentityCore<User>()
+        services.AddIdentityCore<User>(opt => opt.SignIn.RequireConfirmedEmail = false)
             .AddUserManager<UserManager<User>>()
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
