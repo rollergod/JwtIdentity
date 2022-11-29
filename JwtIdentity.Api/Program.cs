@@ -12,6 +12,16 @@ builder.Services.AddInfrastructureLayer(builder.Configuration);
 builder.Services.AddAppLayer(builder.Configuration);
 builder.Services.AddUiLayer();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Default", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,7 +31,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
+
+app.UseCors("Default");
 
 app.UseAuthentication();
 app.UseAuthorization();
