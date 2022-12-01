@@ -1,6 +1,6 @@
 import { apiSlice } from "../../app/api/apiSlice";
 
-export const authApiSlice = apiSlice.injectEndpoints({
+export const accountSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         login: builder.mutation({
             query: credentials => ({
@@ -15,11 +15,16 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials }
             })
+        }),
+        confirmEmail: builder.query({
+            query: ({ userId, code }) =>
+                `account/confirmemail?userid=${userId}&code=${code}`,
         })
     })
 })
 
 export const {
     useLoginMutation,
-    useRegisterMutation
-} = authApiSlice;
+    useRegisterMutation,
+    useConfirmEmailQuery
+} = accountSlice;

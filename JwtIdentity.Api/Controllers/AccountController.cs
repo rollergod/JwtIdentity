@@ -43,14 +43,10 @@ public class AccountController : ControllerBase
             if (!result.Succeeded)
                 return BadRequest(result.ToString());
 
-            // var callbackUrl = Url.Action(
-            //     "ConfirmEmail",
-            //     "Account",
-            //     new { code = result.Data, userId = user.Id },
-            //     protocol: HttpContext.Request.Scheme
-            // );
+            var encodedToken = Uri.EscapeDataString(result.Data);
+            string callbackUrl = $"http://localhost:3000/test?userId=${user.Id}&code=${encodedToken}";
 
-            string messageBody = $"http://localhost:3000/test?userId={user.Id}&code={result.Data}";
+            string messageBody = "Please verify email by going to this <a href=\"" + callbackUrl + "\">link</a>";
 
             var isEmailSended = await _accountService.SendEmail(messageBody, user.Email);
 
@@ -143,8 +139,7 @@ public class AccountController : ControllerBase
         if (!isUserExist.Succeeded)
             return BadRequest(isUserExist.Message);
 
-        return Redirect("http://localhost:3000/activated");
-        // return Ok(isUserExist.Message);
+        return Ok(isUserExist.Message);
     }
 
 }

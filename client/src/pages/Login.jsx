@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../features/auth/authSlice';
-import { useLoginMutation } from '../features/auth/authApiSlice';
+import { useLoginMutation } from '../features/auth/accountSlice';
 
 const Login = () => {
     const dispatch = useDispatch();

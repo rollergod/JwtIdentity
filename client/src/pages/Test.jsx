@@ -1,32 +1,36 @@
 import React from 'react';
+
 import { useLocation } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { useConfirmEmailQuery } from '../features/auth/accountSlice';
 
 function useQuery() {
-    const { search } = useLocation();
+    const location = useLocation();
+    const querystr = require('query-string');
+    let { userId, code } = querystr.parse(location.search);
 
-    return React.useMemo(() => new URLSearchParams(search), [search]);
+    return { userId, code };
 }
 
 const Test = () => {
-    const location = useLocation();
-    let query = useQuery();
+    const { userId, code } = useQuery();
 
-    let id = query.get("id");
+    const { data, isLoading, error } = useConfirmEmailQuery({
+        userId: userId,
+        code: encodeURIComponent(code)
+    });
 
-    const querystr = require('query-string');
-    const parsed = querystr.parse(location.search);
-    console.log(parsed);
+    console.log('confirm', data); // достать data от сюда(это message)
+    console.log('confirm', error);
 
     return (
         <div>
-            {id ? (
-                <h3>
-                    The <code>id</code> in the query string is &quot;{id}
-                    &quot;
-                </h3>
-            ) : (
-                <h3>There is no id in the query string</h3>
-            )}
+            {
+                isLoading ? (<h1>Loading</h1>) :
+                    (
+                        <h1>data</h1>
+                    )
+            }
         </div>
     )
 };

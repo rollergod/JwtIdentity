@@ -12,7 +12,6 @@ import {
   Route,
 } from "react-router-dom";
 
-// /api/Account/confirmemail?code
 
 function App() {
   return (
