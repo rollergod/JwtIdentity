@@ -49,8 +49,9 @@ public class AccountController : ControllerBase
                 new { code = result.Data, userId = user.Id },
                 protocol: HttpContext.Request.Scheme
             );
-
-            string messageBody = "Please verify email by going to this <a href=\"" + callbackUrl + "\">link</a>";
+            string callBack = "http://localhost:3000/test?id=1&code=aasd";
+            // string messageBody = "Please verify email by going to this <a href=\"" + callbackUrl + "\">link</a>";
+            string messageBody = "Please verify email by going to this <a href=\"" + callBack + "\">link</a>";
 
             var isEmailSended = await _accountService.SendEmail(messageBody, user.Email);
 
@@ -143,7 +144,8 @@ public class AccountController : ControllerBase
         if (!isUserExist.Succeeded)
             return BadRequest(isUserExist.Message);
 
-        return Ok(isUserExist.Message);
+        return Redirect("http://localhost:3000/activated");
+        // return Ok(isUserExist.Message);
     }
 
 }
