@@ -43,15 +43,14 @@ public class AccountController : ControllerBase
             if (!result.Succeeded)
                 return BadRequest(result.ToString());
 
-            var callbackUrl = Url.Action(
-                "ConfirmEmail",
-                "Account",
-                new { code = result.Data, userId = user.Id },
-                protocol: HttpContext.Request.Scheme
-            );
-            string callBack = "http://localhost:3000/test?id=1&code=aasd";
-            // string messageBody = "Please verify email by going to this <a href=\"" + callbackUrl + "\">link</a>";
-            string messageBody = "Please verify email by going to this <a href=\"" + callBack + "\">link</a>";
+            // var callbackUrl = Url.Action(
+            //     "ConfirmEmail",
+            //     "Account",
+            //     new { code = result.Data, userId = user.Id },
+            //     protocol: HttpContext.Request.Scheme
+            // );
+
+            string messageBody = $"http://localhost:3000/test?userId={user.Id}&code={result.Data}";
 
             var isEmailSended = await _accountService.SendEmail(messageBody, user.Email);
 
