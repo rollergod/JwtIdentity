@@ -2,7 +2,7 @@ import './App.css';
 
 import Home from './pages/Home';
 import Menu from './components/Menu';
-import Test from './pages/Test';
+import EmailConfirmation from './pages/EmailConfirmation';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -11,7 +11,6 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-
 
 function App() {
   return (
@@ -24,8 +23,7 @@ function App() {
             <Route path='/register' element={<Register></Register>} />
             <Route path='/login' element={<Login></Login>} />
             <Route path='/activated' element={<Login></Login>} />
-            <Route exact path='/test' element={<Test></Test>} />
-            {/* <Route path='/api/Account/confirmemail?' element={<ConfirmEmail></ConfirmEmail>} /> */}
+            <Route exact path='/confirmemail' element={<EmailConfirmation></EmailConfirmation>} />
           </Routes>
         </BrowserRouter>
       </main>

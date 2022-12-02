@@ -44,7 +44,7 @@ public class AccountController : ControllerBase
                 return BadRequest(result.ToString());
 
             var encodedToken = Uri.EscapeDataString(result.Data);
-            string callbackUrl = $"http://localhost:3000/test?userId=${user.Id}&code=${encodedToken}";
+            string callbackUrl = $"http://localhost:3000/confirmemail?userId={user.Id}&code={encodedToken}";
 
             string messageBody = "Please verify email by going to this <a href=\"" + callbackUrl + "\">link</a>";
 
