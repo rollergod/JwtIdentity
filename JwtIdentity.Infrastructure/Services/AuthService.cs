@@ -26,15 +26,15 @@ public class AuthService : IAuthService
         var isUserExist = await _userManager.FindByEmailAsync(email);
 
         if (isUserExist == null)
-            return Response<TokenResponse>.Fail("User doesn`t exist");
+            return Response<TokenResponse>.Fail("User doesnt exist");
 
         if (!isUserExist.EmailConfirmed)
-            return Response<TokenResponse>.Fail("User doesn`t confirm his email");
+            return Response<TokenResponse>.Fail("User doesnt confirm his email");
 
         var isPasswordCorrect = await _userManager.CheckPasswordAsync(isUserExist, password);
 
         if (!isPasswordCorrect)
-            return Response<TokenResponse>.Fail("User`s password isnt correct");
+            return Response<TokenResponse>.Fail("Users password isnt correct");
 
         var token = _jwtTokenGenerator.GenerateToken(isUserExist);
 

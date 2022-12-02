@@ -53,7 +53,8 @@ public class AccountController : ControllerBase
             if (!isEmailSended.Succeeded)
                 return BadRequest("Something went wrong while sending email");
 
-            return Ok(result.Message);
+            //TODO : придумать, что возвращать
+            return Ok("Check your email");
         }
         return BadRequest(ModelState);
     }
@@ -83,7 +84,7 @@ public class AccountController : ControllerBase
             var tokenObject = await _accountService.GenerateResetToken(email);
 
             if (!tokenObject.Succeeded)
-                return BadRequest("The token can`t be created");
+                return BadRequest("The token cant be created");
 
             var callbackUrl = Url.Action(
                 "ResetPassword",
