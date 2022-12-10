@@ -29,9 +29,9 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("register")]
-    [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(RegisterResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(List<string>), (int)HttpStatusCode.BadRequest)]
-    [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(RegisterResponse), (int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> Register(RegisterModel model)
     {
         if (ModelState.IsValid)
@@ -55,7 +55,6 @@ public class AccountController : ControllerBase
             if (!isEmailSended.Succeeded)
                 return BadRequest(registerResponse);
 
-            //TODO : придумать, что возвращать
             return Ok(registerResponse);
         }
         return BadRequest(ModelState);
@@ -71,7 +70,7 @@ public class AccountController : ControllerBase
             var result = await _userService.Login(model.Email, model.Password);
 
             if (!result.Succeeded)
-                return BadRequest(result.ToString());
+                return BadRequest(result);
 
             return Ok(result.Data);
         }

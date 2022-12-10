@@ -10,6 +10,7 @@ const Register = () => {
     const [nickName, setNickName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [registerResponse, setRegisterResponse] = React.useState({});
 
     const [register] = useRegisterMutation();
 
@@ -20,11 +21,21 @@ const Register = () => {
 
         // //TODO ; доделать обработку регистрации
         const result = await register({ name, nickName, email, password }).unwrap();
-        console.log('result', result);
+        console.log('result', result); //object
         setIsRegisterSuccessfully(true);
         console.log(isRegisterSuccessfully);
+
+        // setRegisterResponse(JSON.stringify(result));
+        setRegisterResponse(result);
+        console.log(registerResponse);
     }
 
+    const testFunc = (e) => {
+        e.preventDefault();
+        console.log(registerResponse);
+    }
+
+    //TODO : валидация?
     return (
         <div className='h-screen flex bg-gray-bg1'>
             <div className='w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16'>
@@ -99,6 +110,7 @@ const Register = () => {
                         <h2 style={{ color: 'black' }}>EmailConfirmed</h2>
                     </div>
                 }
+                <button onClick={testFunc}>Test</button>
             </div>
         </div>
     )

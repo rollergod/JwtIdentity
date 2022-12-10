@@ -9,9 +9,6 @@ namespace JwtIdentity.Api.Common.Mapping
         {
             config.NewConfig<Response<string>, RegisterResponse>()
                 .Map(dest => dest.ResponseMessage, source => source.Message);
-
-            config.NewConfig<string, RegisterResponse>()
-                .Map(dest => dest.Code, source => source);
         }
     }
 }

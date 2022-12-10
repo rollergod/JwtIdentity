@@ -60,7 +60,7 @@ public class AuthService : IAuthService
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(model);
 
-            var registerResponse = _mapper.Map<RegisterResponse>(code);
+            var registerResponse = new RegisterResponse { Code = code };
 
             return Response<RegisterResponse>.Success(
                 data: registerResponse,
