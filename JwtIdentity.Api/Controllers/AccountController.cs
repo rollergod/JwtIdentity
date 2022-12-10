@@ -41,26 +41,28 @@ public class AccountController : ControllerBase
             var result = await _userService.Register(user, model.Password);
 
             if (!result.Succeeded)
-                return BadRequest(result.ToString());
+                return BadRequest(result);
 
-            var encodedToken = Uri.EscapeDataString(result.Data);
+            var encodedToken = Uri.EscapeDataString(result.Data.Code);
             string callbackUrl = $"http://localhost:3000/confirmemail?userId={user.Id}&code={encodedToken}";
 
             string messageBody = "Please verify email by going to this <a href=\"" + callbackUrl + "\">link</a>";
 
             var isEmailSended = await _accountService.SendEmail(messageBody, user.Email);
 
+            var registerResponse = _mapper.Map<RegisterResponse>(isEmailSended);
+
             if (!isEmailSended.Succeeded)
-                return BadRequest("Something went wrong while sending email");
+                return BadRequest(registerResponse);
 
             //TODO : придумать, что возвращать
-            return Ok("Check your email");
+            return Ok(registerResponse);
         }
         return BadRequest(ModelState);
     }
 
     [HttpPost("login")]
-    [ProducesResponseType(typeof(TokenResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(LoginResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> Login(LoginModel model)
     {

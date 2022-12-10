@@ -11,26 +11,18 @@ const Register = () => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const [register, { isError }] = useRegisterMutation();
+    const [register] = useRegisterMutation();
+
+    const [isRegisterSuccessfully, setIsRegisterSuccessfully] = React.useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        //TODO ; доделать обработку регистрации
-        const result = await register({ name, nickName, email, password }).unwrap()
-            .then((payload) => console.log(payload));
+        // //TODO ; доделать обработку регистрации
+        const result = await register({ name, nickName, email, password }).unwrap();
         console.log('result', result);
-        // try {
-        //     await register({ name, nickName, email, password }).unwrap();
-
-        //     if (!isError)
-        //         navigate('/login', { replace: true });
-
-        // } catch (error) {
-        //     console.log('er', error.data);
-        //     console.log('er', isError);
-        // }
-
+        setIsRegisterSuccessfully(true);
+        console.log(isRegisterSuccessfully);
     }
 
     return (
@@ -50,6 +42,7 @@ const Register = () => {
                             placeholder='Your name'
                             onChange={(e) => setName(e.target.value)}
                             value={name}
+                            required
                         />
                     </div>
                     <div>
@@ -61,6 +54,7 @@ const Register = () => {
                             placeholder='Your display name'
                             onChange={(e) => setNickName(e.target.value)}
                             value={nickName}
+                            required
                         />
                     </div>
                     <div>
@@ -72,6 +66,7 @@ const Register = () => {
                             placeholder='Your Email'
                             onChange={(e) => setEmail(e.target.value)}
                             value={email}
+                            required
                         />
                     </div>
                     <div>
@@ -83,6 +78,8 @@ const Register = () => {
                             placeholder='Your Password'
                             onChange={(e) => setPassword(e.target.value)}
                             value={password}
+                            required
+                            minLength={5}
                         />
                     </div>
 
@@ -96,6 +93,12 @@ const Register = () => {
                     </div>
                     <span className='text-sm '>Are you have an account? <Link className='text-blue-600 hover:underline' to='/login'>sign up</Link></span>
                 </form>
+                {
+                    isRegisterSuccessfully &&
+                    <div>
+                        <h2 style={{ color: 'black' }}>EmailConfirmed</h2>
+                    </div>
+                }
             </div>
         </div>
     )

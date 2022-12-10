@@ -5,6 +5,6 @@ namespace JwtIdentity.Application.Common.Interfaces;
 
 public interface IAuthService
 {
-    Task<Response<TokenResponse>> Login(string email, string password);
-    Task<Response<string>> Register(User model, string password);
+    Task<Response<LoginResponse>> Login(string email, string password);
+    Task<Response<RegisterResponse>> Register(User model, string password);
 }

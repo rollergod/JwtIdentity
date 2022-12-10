@@ -8,7 +8,7 @@ public class TokenResponseMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<(User isUserExist, string token), TokenResponse>()
+        config.NewConfig<(User isUserExist, string token), LoginResponse>()
             .Map(dest => dest.Token, src => src.token)
             .Map(dest => dest, src => src.isUserExist);
     }

@@ -21,37 +21,38 @@ public class AuthService : IAuthService
         _jwtTokenGenerator = jwtTokenGenerator;
         _mapper = mapper;
     }
-    public async Task<Response<TokenResponse>> Login(string email, string password)
+
+    public async Task<Response<LoginResponse>> Login(string email, string password)
     {
         var isUserExist = await _userManager.FindByEmailAsync(email);
 
         if (isUserExist == null)
-            return Response<TokenResponse>.Fail("User doesnt exist");
+            return Response<LoginResponse>.Fail("User doesnt exist");
 
         if (!isUserExist.EmailConfirmed)
-            return Response<TokenResponse>.Fail("User doesnt confirm his email");
+            return Response<LoginResponse>.Fail("User doesnt confirm his email");
 
         var isPasswordCorrect = await _userManager.CheckPasswordAsync(isUserExist, password);
 
         if (!isPasswordCorrect)
-            return Response<TokenResponse>.Fail("Users password isnt correct");
+            return Response<LoginResponse>.Fail("Users password isn`t correct");
 
         var token = _jwtTokenGenerator.GenerateToken(isUserExist);
 
-        var tokenResponse = _mapper.Map<TokenResponse>((isUserExist, token));
+        var tokenResponse = _mapper.Map<LoginResponse>((isUserExist, token));
 
-        return Response<TokenResponse>.Success(
+        return Response<LoginResponse>.Success(
             data: tokenResponse,
             message: "Successful authorization"
         );
     }
 
-    public async Task<Response<string>> Register(User model, string password)
+    public async Task<Response<RegisterResponse>> Register(User model, string password)
     {
         var isUserExist = await _userManager.FindByEmailAsync(model.Email);
 
         if (isUserExist != null)
-            return Response<string>.Fail("User is existing");
+            return Response<RegisterResponse>.Fail("User is existing");
 
         var isCreated = await _userManager.CreateAsync(model, password);
 
@@ -59,13 +60,15 @@ public class AuthService : IAuthService
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(model);
 
-            return Response<string>.Success(
-                data: code,
+            var registerResponse = _mapper.Map<RegisterResponse>(code);
+
+            return Response<RegisterResponse>.Success(
+                data: registerResponse,
                 message: "User registered successfully. Confirm email");
         }
 
         var errorList = isCreated.Errors.ToList();
 
-        return Response<string>.Fail(errors: errorList.Select(e => e.Description).ToList());
+        return Response<RegisterResponse>.Fail(errors: errorList.Select(e => e.Description).ToList());
     }
 }
