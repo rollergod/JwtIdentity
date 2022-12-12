@@ -45,7 +45,7 @@ public class AccountService : IAccountService
             message: message);
 
         if (sendingEmail)
-            return Response<string>.Success("Check your email");
+            return Response<string>.Success("Message sended on your email. Confirm you email to continue");
 
         return Response<string>.Fail("Something went wrong");
     }

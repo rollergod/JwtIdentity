@@ -4,6 +4,7 @@ using JwtIdentity.Domain.IdentityModels;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace JwtIdentity.Infrastructure.Services;
 
@@ -49,10 +50,15 @@ public class AuthService : IAuthService
 
     public async Task<Response<RegisterResponse>> Register(User model, string password)
     {
-        var isUserExist = await _userManager.FindByEmailAsync(model.Email);
+        var isUserExistWithEmail = await _userManager.FindByEmailAsync(model.Email);
 
-        if (isUserExist != null)
-            return Response<RegisterResponse>.Fail("User is existing");
+        if (isUserExistWithEmail != null)
+            return Response<RegisterResponse>.Fail("This email is already being used by someone ");
+
+        var isUserExistWithNickName = await _userManager.Users.FirstOrDefaultAsync(u => u.DisplayName == model.DisplayName);
+
+        if (isUserExistWithNickName != null)
+            return Response<RegisterResponse>.Fail("This nickname is already being used by someone ");
 
         var isCreated = await _userManager.CreateAsync(model, password);
 
