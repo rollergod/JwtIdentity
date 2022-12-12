@@ -28,10 +28,10 @@ public class AuthService : IAuthService
         var isUserExist = await _userManager.FindByEmailAsync(email);
 
         if (isUserExist == null)
-            return Response<LoginResponse>.Fail("User doesnt exist");
+            return Response<LoginResponse>.Fail("User doesn`t exist. Register and then log in");
 
         if (!isUserExist.EmailConfirmed)
-            return Response<LoginResponse>.Fail("User doesnt confirm his email");
+            return Response<LoginResponse>.Fail("User doesn`t confirm his email. Check your email and confirm account");
 
         var isPasswordCorrect = await _userManager.CheckPasswordAsync(isUserExist, password);
 

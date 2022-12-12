@@ -2,8 +2,12 @@ import React from 'react';
 import { BsFillMoonStarsFill } from 'react-icons/bs';
 
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../features/auth/authSlice';
 
 const Menu = () => {
+    const user = useSelector(selectCurrentUser);
+    console.log(user);
     return (
         <nav className='py-3 mb-12 flex justify-between'>
             <h1 className='text-xl'>developedbyrollergod</h1>

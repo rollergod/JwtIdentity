@@ -9,13 +9,11 @@ import CountDownTimer from '../components/CountDownTimer';
 const EmailConfirmation = () => {
     const { userId, code } = useQuery();
 
-    const { data, isLoading, error } = useConfirmEmailQuery({
+    //TODO: email уж подтверждён
+    const { isLoading, isError } = useConfirmEmailQuery({
         userId: userId,
         code: encodeURIComponent(code)
     });
-
-    console.log('confirm', data); // достать data от сюда(это message)
-    console.log('confirm', error);
 
     const navigate = useNavigate()
 
