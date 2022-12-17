@@ -11,11 +11,10 @@ import { FadeLoader } from 'react-spinners';
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [login, { isError, isLoading }] = useLoginMutation();
+    const [login, { isError, isLoading, data, error }] = useLoginMutation();
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [loginResponse, setLoginResponse] = React.useState({});
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,14 +22,11 @@ const Login = () => {
         try {
             const userData = await login({ email, password }).unwrap();
             dispatch(setCredentials(userData));
-
             if (!isLoading) {
                 navigate('/', { replace: true });
             }
-
         } catch (error) {
-            console.log('error', error);
-            setLoginResponse(error);
+            console.log(error);
         }
     };
 
@@ -46,13 +42,13 @@ const Login = () => {
                     <h2>
                         Ooops.. something went wrong:
                         {
-                            loginResponse.data.message ?
+                            // не доходит до сюда, вылезает ошибка
+                            error.data.message ?
                                 (
-                                    <p>{loginResponse.data.message}</p>
-                                )
-                                :
+                                    <p>{error.data.message}</p>
+                                ) :
                                 (
-                                    loginResponse.data.errors.map(obj => (
+                                    error.data.errors.map(obj => (
                                         <p>{obj}</p>
                                     ))
                                 )
@@ -98,10 +94,10 @@ const Login = () => {
                     {
                         isLoading ? (<FadeLoader color="#36d7b7" />) :
                             (
-                                isError === false &&
+                                data &&
                                 <div>
                                     {/* TODO: добавить в loginresponse - responseMessage */}
-                                    <h2 style={{ color: 'black' }}>{loginResponse.token}</h2>
+                                    <h2 style={{ color: 'black' }}>{data.token}</h2>
                                 </div>
                             )
                     }
