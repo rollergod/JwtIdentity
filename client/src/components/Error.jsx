@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Error = ({ message, errors }) => {
+const Error = ({ style, message, errors }) => {
 
     return (
         <h2>
@@ -8,7 +8,7 @@ const Error = ({ message, errors }) => {
             {
                 message ?
                     (
-                        <p className='text-red-500'>{message}</p>
+                        <p className={style}>{message}</p>
                     ) :
                     (
                         errors.map(obj => (

@@ -15,13 +15,13 @@ const Menu = () => {
             <ul className='flex items-center'>
                 <li> <BsFillMoonStarsFill className='cursor-pointer text-2xl' /> </li>
                 <li>
-                    <a className='bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-4 py-2 rounded-md ml-8' href="#">About</a>
+                    <Link className='bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-4 py-2 rounded-md ml-8' to="/">Home</Link>
                 </li>
                 <li>
-                    <a className='bg-gradient-to-b from-purple-500 to-purple-700 text-white px-4 py-2 rounded-md ml-8' href="#">Resume</a>
+                    <a className='bg-gradient-to-b from-purple-500 to-purple-700 text-white px-4 py-2 rounded-md ml-8' href="/resume.pdf">Resume</a>
                 </li>
                 <li>
-                    <a className='bg-gradient-to-t from-orange-500 to-orange-600 text-white px-4 py-2 rounded-md ml-8' href="#">Github</a>
+                    <a className='bg-gradient-to-t from-orange-500 to-orange-600 text-white px-4 py-2 rounded-md ml-8' target="_blank" href="https://github.com/rollergod">Github</a>
                 </li>
                 {
                     user === null || undefined ?

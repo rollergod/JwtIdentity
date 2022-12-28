@@ -65,21 +65,21 @@ public class AccountService : IAccountService
         return Response<string>.Fail($"Cant change password.");
     }
 
-    public async Task<Response<string>> EmailConfirmationAsync(string userId, string code)
+    public async Task<Response<EmailConfirmationResponse>> EmailConfirmationAsync(string userId, string code)
     {
         var user = await _userManager.FindByIdAsync(userId);
 
         if (user == null)
-            return Response<string>.Fail($"User with current {userId} userId doesnt exist");
+            return Response<EmailConfirmationResponse>.Fail($"User with current {userId} userId doesnt exist");
 
         var isEmailConfirmed = await _userManager.ConfirmEmailAsync(user, code);
 
         string status = isEmailConfirmed.Succeeded ?
-            "Confirmation email completed" : "Your email is not confirmed, try again";
+            "Confirmation email completed" : "Your email address has already been verified";
 
         if (!isEmailConfirmed.Succeeded)
-            return Response<string>.Fail("Your email is not confirmed, try again");
+            return Response<EmailConfirmationResponse>.Fail(status);
 
-        return Response<string>.Success("Confirmation email completed");
+        return Response<EmailConfirmationResponse>.Success(status);
     }
 }

@@ -26,5 +26,6 @@ export const accountSlice = apiSlice.injectEndpoints({
 export const {
     useLoginMutation,
     useRegisterMutation,
-    useConfirmEmailQuery
+    useConfirmEmailQuery,
+    useLazyConfirmEmailQuery
 } = accountSlice;
