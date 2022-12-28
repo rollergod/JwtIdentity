@@ -131,6 +131,8 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet("confirmemail")]
+    [ProducesResponseType(typeof(EmailConfirmationResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(EmailConfirmationResponse), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> ConfirmEmail(string userId, string code)
     {
         if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code))
@@ -139,9 +141,9 @@ public class AccountController : ControllerBase
         var isUserExist = await _accountService.EmailConfirmationAsync(userId, code);
 
         if (!isUserExist.Succeeded)
-            return BadRequest(isUserExist.Message);
+            return BadRequest(isUserExist);
 
-        return Ok(isUserExist.Message);
+        return Ok(isUserExist);
     }
 
 }
