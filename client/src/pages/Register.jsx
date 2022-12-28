@@ -1,4 +1,5 @@
 import React from 'react';
+import Error from '../components/Error';
 
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -34,20 +35,7 @@ const Register = () => {
 
                 {
                     isError &&
-                    <h2>
-                        Ooops.. something went wrong:
-                        {
-                            error.data.message ?
-                                (
-                                    <p>{error.data.message}</p>
-                                ) :
-                                (
-                                    error.data.errors.map(obj => (
-                                        <p>{obj}</p>
-                                    ))
-                                )
-                        }
-                    </h2>
+                    <Error message={error.data.message} errors={error.data.errors} />
                 }
 
                 <form onSubmit={handleSubmit}>

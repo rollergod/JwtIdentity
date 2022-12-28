@@ -9,7 +9,7 @@ import CountDownTimer from '../components/CountDownTimer';
 const EmailConfirmation = () => {
     const { userId, code } = useQuery();
 
-    //TODO: email уж подтверждён
+    //TODO: email уже подтверждён?
     const { isLoading, isError } = useConfirmEmailQuery({
         userId: userId,
         code: encodeURIComponent(code)
@@ -34,7 +34,9 @@ const EmailConfirmation = () => {
                             <h2 className='text-3xl py-1 font-medium'>Ваш Email успешно подтверждён.
                                 Теперь вы сможете войти в свой аккаунт</h2>
                             <br />
-                            <p>Через <CountDownTimer hoursMinSecs={hoursMinSecs} /> секунд вы будете перенаправлены на страницу входа.</p>
+                            <p>
+                                Через <CountDownTimer hoursMinSecs={hoursMinSecs} /> секунд вы будете перенаправлены на страницу входа.
+                            </p>
                         </div>
                     )
             }

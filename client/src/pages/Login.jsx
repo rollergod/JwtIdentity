@@ -7,6 +7,7 @@ import { setCredentials } from '../features/auth/authSlice';
 import { useLoginMutation } from '../features/auth/accountSlice';
 
 import { FadeLoader } from 'react-spinners';
+import Error from '../components/Error';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -39,21 +40,7 @@ const Login = () => {
 
                 {
                     isError &&
-                    <h2>
-                        Ooops.. something went wrong:
-                        {
-                            // не доходит до сюда, вылезает ошибка
-                            error.data.message ?
-                                (
-                                    <p>{error.data.message}</p>
-                                ) :
-                                (
-                                    error.data.errors.map(obj => (
-                                        <p>{obj}</p>
-                                    ))
-                                )
-                        }
-                    </h2>
+                    <Error message={error.data.message} errors={error.data.errors} />
                 }
 
                 <form onSubmit={handleSubmit}>
