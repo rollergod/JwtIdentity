@@ -77,6 +77,7 @@ public class AccountController : ControllerBase
         return BadRequest(ModelState);
     }
 
+    // TODO : доедлать эту фигню для пользователя на фронте 
     [HttpPost("forgotpassword")]
     public async Task<IActionResult> ForgotPassword(string email)
     {

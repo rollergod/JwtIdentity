@@ -25,22 +25,22 @@ public class AuthService : IAuthService
 
     public async Task<Response<LoginResponse>> Login(string email, string password)
     {
-        var isUserExist = await _userManager.FindByEmailAsync(email);
+        var existingUser = await _userManager.FindByEmailAsync(email);
 
-        if (isUserExist == null)
+        if (existingUser == null)
             return Response<LoginResponse>.Fail("User doesn`t exist. Register and then log in");
 
-        if (!isUserExist.EmailConfirmed)
+        if (!existingUser.EmailConfirmed)
             return Response<LoginResponse>.Fail("User doesn`t confirm his email. Check your email and confirm account");
 
-        var isPasswordCorrect = await _userManager.CheckPasswordAsync(isUserExist, password);
+        var isPasswordCorrect = await _userManager.CheckPasswordAsync(existingUser, password);
 
         if (!isPasswordCorrect)
             return Response<LoginResponse>.Fail("Users password isn`t correct");
 
-        var token = _jwtTokenGenerator.GenerateToken(isUserExist);
+        var token = _jwtTokenGenerator.GenerateToken(existingUser);
 
-        var tokenResponse = _mapper.Map<LoginResponse>((isUserExist, token));
+        var tokenResponse = _mapper.Map<LoginResponse>((existingUser, token));
 
         return Response<LoginResponse>.Success(
             data: tokenResponse,

@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Menu from './components/Menu';
 import EmailConfirmation from './pages/EmailConfirmation';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 import Register from './pages/Register';
 
 import {
@@ -23,6 +24,7 @@ function App() {
             <Route path='/register' element={<Register></Register>} />
             <Route path='/login' element={<Login></Login>} />
             <Route path='/activated' element={<Login></Login>} />
+            <Route path='/profile' element={<Profile></Profile>} />
             <Route exact path='/confirmemail' element={<EmailConfirmation></EmailConfirmation>} />
           </Routes>
         </BrowserRouter>
