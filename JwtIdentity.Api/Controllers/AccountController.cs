@@ -1,6 +1,7 @@
 using System.Net;
 using JwtIdentity.Application.Common.Interfaces;
 using JwtIdentity.Domain.Common;
+using JwtIdentity.Application.Constants;
 using JwtIdentity.Domain.Common.Contracts.DTO;
 using JwtIdentity.Domain.Common.Contracts.Response;
 using JwtIdentity.Domain.IdentityModels;
@@ -44,7 +45,7 @@ public class AccountController : ControllerBase
                 return BadRequest(result);
 
             var encodedToken = Uri.EscapeDataString(result.Data.Code);
-            string callbackUrl = $"http://localhost:3000/confirmemail?userId={user.Id}&code={encodedToken}";
+            string callbackUrl = $"{ServerUrls.API_URL}/{ServerUrls.API_URL_CONFIRM_EMAIL}?userId={user.Id}&code={encodedToken}";
 
             string messageBody = "Please verify email by going to this <a href=\"" + callbackUrl + "\">link</a>";
 
@@ -88,12 +89,9 @@ public class AccountController : ControllerBase
             if (!tokenObject.Succeeded)
                 return BadRequest("The token cant be created");
 
-            var callbackUrl = Url.Action(
-                "ResetPassword",
-                "Account",
-                new { code = tokenObject.Data.Code, userId = tokenObject.Data.User.Id },
-                protocol: HttpContext.Request.Scheme
-            );
+            var encodedToken = Uri.EscapeDataString(tokenObject.Data.Code);
+
+            string callbackUrl = $"{ServerUrls.API_URL}/{ServerUrls.API_URL_CONFIRM_EMAIL}?code={encodedToken}";
 
             string messageBody = "Please reset password by going to this <a href=\"" + callbackUrl + "\">link</a>";
 

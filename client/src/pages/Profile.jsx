@@ -1,5 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import ChangePassword from '../components/ChangePassword';
+import PasswordInput from '../components/PasswordInput';
 
 import { selectCurrentUser, selectCurrentToken } from '../features/auth/authSlice';
 
@@ -24,6 +26,7 @@ const Profile = () => {
                 </div>
 
                 <button>Change password</button>
+                <ChangePassword></ChangePassword>
             </div>
         </>
     )
