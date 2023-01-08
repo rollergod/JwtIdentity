@@ -26,6 +26,7 @@ function App() {
             <Route path='/activated' element={<Login></Login>} />
             <Route path='/profile' element={<Profile></Profile>} />
             <Route exact path='/confirmemail' element={<EmailConfirmation></EmailConfirmation>} />
+            <Route exact path='/forgotpassword' element={<EmailConfirmation></EmailConfirmation>} />
           </Routes>
         </BrowserRouter>
       </main>

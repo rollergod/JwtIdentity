@@ -80,26 +80,27 @@ public class AccountController : ControllerBase
 
     // TODO : доедлать эту фигню для пользователя на фронте 
     [HttpPost("forgotpassword")]
-    public async Task<IActionResult> ForgotPassword(string email)
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
     {
         if (ModelState.IsValid)
         {
-            var tokenObject = await _accountService.GenerateResetToken(email);
+            var tokenObject = await _accountService.GenerateResetToken(model.Email);
 
             if (!tokenObject.Succeeded)
                 return BadRequest("The token cant be created");
 
             var encodedToken = Uri.EscapeDataString(tokenObject.Data.Code);
 
-            string callbackUrl = $"{ServerUrls.API_URL}/{ServerUrls.API_URL_CONFIRM_EMAIL}?code={encodedToken}";
+            string callbackUrl = $"{ServerUrls.API_URL}/{ServerUrls.API_URL_RESET_PASSWORD}?code={encodedToken}";
 
             string messageBody = "Please reset password by going to this <a href=\"" + callbackUrl + "\">link</a>";
 
-            var isEmailSended = await _accountService.SendEmail(messageBody, email);
+            var isEmailSended = await _accountService.SendEmail(messageBody, model.Email);
 
             if (!isEmailSended.Succeeded)
                 return BadRequest("Something went wrong while sending email");
 
+            //надо вернуть объект
             return Ok("Email sended successfully");
         }
         return BadRequest(ModelState);

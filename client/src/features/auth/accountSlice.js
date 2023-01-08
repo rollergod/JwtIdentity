@@ -19,6 +19,13 @@ export const accountSlice = apiSlice.injectEndpoints({
         confirmEmail: builder.query({
             query: ({ userId, code }) =>
                 `account/confirmemail?userid=${userId}&code=${code}`,
+        }),
+        forgotPassword: builder.mutation({
+            query: email => ({
+                url: 'account/forgotpassword',
+                method: 'POST',
+                body: { ...email }
+            })
         })
     })
 })
@@ -27,5 +34,6 @@ export const {
     useLoginMutation,
     useRegisterMutation,
     useConfirmEmailQuery,
-    useLazyConfirmEmailQuery
+    useLazyConfirmEmailQuery,
+    useForgotPasswordMutation
 } = accountSlice;

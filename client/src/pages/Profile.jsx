@@ -3,10 +3,25 @@ import { useSelector } from 'react-redux';
 import ChangePassword from '../components/ChangePassword';
 import PasswordInput from '../components/PasswordInput';
 
-import { selectCurrentUser, selectCurrentToken } from '../features/auth/authSlice';
+import { selectCurrentUser } from '../features/auth/authSlice';
+import { useForgotPasswordMutation } from '../features/auth/accountSlice';
 
 const Profile = () => {
     const user = useSelector(selectCurrentUser);
+
+    const [forgotPassword, { isLoading, isError, error, data }] = useForgotPasswordMutation();
+
+    const checkTestForgotPassword = async (e) => {
+        e.preventDefault();
+        console.log(user);
+        try {
+            const result = await forgotPassword({ email: user.email }).unwrap();
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <>
             <div className='h-1/2 rounded flex flex-col'>
@@ -24,6 +39,8 @@ const Profile = () => {
                     <h3 className='text-gray-500 py-1'>Email - {user.email}</h3>
                     <h3 className='text-gray-500'>Nickname - {user.displayName}</h3>
                 </div>
+
+                <button onClick={checkTestForgotPassword}>check test forgot password</button>
 
                 <button>Change password</button>
                 <ChangePassword></ChangePassword>
