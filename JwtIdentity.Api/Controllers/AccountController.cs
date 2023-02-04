@@ -87,7 +87,7 @@ public class AccountController : ControllerBase
             var tokenObject = await _accountService.GenerateResetToken(model.Email);
 
             if (!tokenObject.Succeeded)
-                return BadRequest("The token cant be created");
+                return BadRequest(tokenObject);
 
             var encodedToken = Uri.EscapeDataString(tokenObject.Data.Code);
 
@@ -98,10 +98,9 @@ public class AccountController : ControllerBase
             var isEmailSended = await _accountService.SendEmail(messageBody, model.Email);
 
             if (!isEmailSended.Succeeded)
-                return BadRequest("Something went wrong while sending email");
+                return BadRequest(isEmailSended);
 
-            //надо вернуть объект
-            return Ok("Email sended successfully");
+            return Ok(isEmailSended);
         }
         return BadRequest(ModelState);
     }
@@ -124,7 +123,7 @@ public class AccountController : ControllerBase
             );
 
             if (result.Succeeded)
-                return Ok();
+                return Ok(); //TODO : добавить response object
         }
 
         return BadRequest(ModelState);

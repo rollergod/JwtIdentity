@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import ChangePassword from '../components/ChangePassword';
+import ChangePassword from './ChangePassword';
 import PasswordInput from '../components/PasswordInput';
 
 import { selectCurrentUser } from '../features/auth/authSlice';
@@ -16,7 +16,6 @@ const Profile = () => {
         console.log(user);
         try {
             const result = await forgotPassword({ email: user.email }).unwrap();
-
         } catch (error) {
             console.log(error);
         }
@@ -40,10 +39,11 @@ const Profile = () => {
                     <h3 className='text-gray-500'>Nickname - {user.displayName}</h3>
                 </div>
 
-                <button onClick={checkTestForgotPassword}>check test forgot password</button>
+                <button className='underline text-blue-500 hover:text-blue-600' onClick={checkTestForgotPassword}>Forgot your password?</button>
 
-                <button>Change password</button>
-                <ChangePassword></ChangePassword>
+                {
+                    data && <h2>{data.message}</h2> //TODO : отформатировать текст
+                }
             </div>
         </>
     )

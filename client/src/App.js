@@ -2,10 +2,11 @@ import './App.css';
 
 import Home from './pages/Home';
 import Menu from './components/Menu';
-import EmailConfirmation from './pages/EmailConfirmation';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
+import ChangePassword from './pages/ChangePassword';
+import EmailConfirmation from './pages/EmailConfirmation';
 
 import {
   BrowserRouter,
@@ -26,7 +27,7 @@ function App() {
             <Route path='/activated' element={<Login></Login>} />
             <Route path='/profile' element={<Profile></Profile>} />
             <Route exact path='/confirmemail' element={<EmailConfirmation></EmailConfirmation>} />
-            <Route exact path='/forgotpassword' element={<EmailConfirmation></EmailConfirmation>} />
+            <Route exact path='/resetpassword' element={<ChangePassword></ChangePassword>} />
           </Routes>
         </BrowserRouter>
       </main>
