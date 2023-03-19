@@ -1,15 +1,12 @@
 using System.Net;
 using JwtIdentity.Application.Common.Interfaces;
-using JwtIdentity.Domain.Common;
 using JwtIdentity.Application.Constants;
 using JwtIdentity.Domain.Common.Contracts.DTO;
 using JwtIdentity.Domain.Common.Contracts.Response;
 using JwtIdentity.Domain.IdentityModels;
-using Mapster;
 using MapsterMapper;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
+using JwtIdentity.Api.Filters;
 
 namespace JwtIdentity.Api.Controllers;
 
@@ -30,79 +27,70 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("register")]
+    [ServiceFilter(typeof(ModelStateFilter))]
     [ProducesResponseType(typeof(RegisterResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(List<string>), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(RegisterResponse), (int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> Register(RegisterModel model)
     {
-        if (ModelState.IsValid)
-        {
-            var user = _mapper.Map<User>(model);
+        var user = _mapper.Map<User>(model);
 
-            var result = await _userService.Register(user, model.Password);
+        var result = await _userService.Register(user, model.Password);
 
-            if (!result.Succeeded)
-                return BadRequest(result);
+        if (!result.Succeeded)
+            return BadRequest(result);
 
-            var encodedToken = Uri.EscapeDataString(result.Data.Code);
-            string callbackUrl = $"{ServerUrls.API_URL}/{ServerUrls.API_URL_CONFIRM_EMAIL}?userId={user.Id}&code={encodedToken}";
+        var encodedToken = Uri.EscapeDataString(result.Data.Code);
+        string callbackUrl = $"{ServerUrls.API_URL}/{ServerUrls.API_URL_CONFIRM_EMAIL}?userId={user.Id}&code={encodedToken}";
 
-            string messageBody = "Please verify email by going to this <a href=\"" + callbackUrl + "\">link</a>";
+        string messageBody = "Please verify email by going to this <a href=\"" + callbackUrl + "\">link</a>";
 
-            var isEmailSended = await _accountService.SendEmail(messageBody, user.Email);
+        var isEmailSended = await _accountService.SendEmail(messageBody, user.Email);
 
-            var registerResponse = _mapper.Map<RegisterResponse>(isEmailSended);
+        var registerResponse = _mapper.Map<RegisterResponse>(isEmailSended);
 
-            if (!isEmailSended.Succeeded)
-                return BadRequest(registerResponse);
+        if (!isEmailSended.Succeeded)
+            return BadRequest(registerResponse);
 
-            return Ok(registerResponse);
-        }
-        return BadRequest(ModelState);
+        return Ok(registerResponse);
     }
 
     [HttpPost("login")]
+    [ServiceFilter(typeof(ModelStateFilter))]
     [ProducesResponseType(typeof(LoginResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> Login(LoginModel model)
     {
-        if (ModelState.IsValid)
-        {
-            var result = await _userService.Login(model.Email, model.Password);
+        var result = await _userService.Login(model.Email, model.Password);
 
-            if (!result.Succeeded)
-                return BadRequest(result);
+        if (!result.Succeeded)
+            return BadRequest(result);
 
-            return Ok(result.Data);
-        }
-        return BadRequest(ModelState);
+        return Ok(result.Data);
     }
 
     // TODO : доедлать эту фигню для пользователя на фронте 
     [HttpPost("forgotpassword")]
+    [ServiceFilter(typeof(ModelStateFilter))]
     public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
     {
-        if (ModelState.IsValid)
-        {
-            var tokenObject = await _accountService.GenerateResetToken(model.Email);
+        var tokenObject = await _accountService.GenerateResetToken(model.Email);
 
-            if (!tokenObject.Succeeded)
-                return BadRequest(tokenObject);
+        if (!tokenObject.Succeeded)
+            return BadRequest(tokenObject);
 
-            var encodedToken = Uri.EscapeDataString(tokenObject.Data.Code);
+        var encodedToken = Uri.EscapeDataString(tokenObject.Data.Code);
 
-            string callbackUrl = $"{ServerUrls.API_URL}/{ServerUrls.API_URL_RESET_PASSWORD}?code={encodedToken}";
+        string callbackUrl = $"{ServerUrls.API_URL}/{ServerUrls.API_URL_RESET_PASSWORD}?code={encodedToken}";
 
-            string messageBody = "Please reset password by going to this <a href=\"" + callbackUrl + "\">link</a>";
+        string messageBody = "Please reset password by going to this <a href=\"" + callbackUrl + "\">link</a>";
 
-            var isEmailSended = await _accountService.SendEmail(messageBody, model.Email);
+        var isEmailSended = await _accountService.SendEmail(messageBody, model.Email);
 
-            if (!isEmailSended.Succeeded)
-                return BadRequest(isEmailSended);
+        if (!isEmailSended.Succeeded)
+            return BadRequest(isEmailSended);
 
-            return Ok(isEmailSended);
-        }
-        return BadRequest(ModelState);
+        return Ok(isEmailSended);
     }
 
     [HttpGet("resetpassword")]
@@ -112,21 +100,19 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("resetpassword")]
+    [ServiceFilter(typeof(ModelStateFilter))]
     public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordViewModel)
     {
-        if (ModelState.IsValid)
-        {
-            var result = await _accountService.ResetPassword(
-                resetPasswordViewModel.Email,
-                resetPasswordViewModel.Password,
-                resetPasswordViewModel.Code
-            );
+        var result = await _accountService.ResetPassword(
+            resetPasswordViewModel.Email,
+            resetPasswordViewModel.Password,
+            resetPasswordViewModel.Code
+        );
 
-            if (result.Succeeded)
-                return Ok(); //TODO : добавить response object
-        }
+        if (result.Succeeded)
+            return Ok(result); //TODO : добавить response object
 
-        return BadRequest(ModelState);
+        return BadRequest(result);
     }
 
     [HttpGet("confirmemail")]
